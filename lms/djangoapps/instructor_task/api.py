@@ -16,7 +16,8 @@ from celery.states import READY_STATES
 
 from common.djangoapps.util import milestones_helpers
 from lms.djangoapps.bulk_email.api import get_course_email
-from lms.djangoapps.certificates.models import CertificateGenerationHistory
+# from lms.djangoapps.certificates.models import CertificateGenerationHistory
+from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.instructor_task.api_helper import (
     QueueConnectionError,
     check_arguments_for_overriding,
@@ -524,12 +525,19 @@ def generate_certificates_for_students(request, course_key, student_set=None, sp
     task_key = ""
     instructor_task = submit_task(request, task_type, task_class, course_key, task_input, task_key)
 
-    CertificateGenerationHistory.objects.create(
-        course_id=course_key,
-        generated_by=request.user,
-        instructor_task=instructor_task,
-        is_regeneration=False
-    )
+    # CertificateGenerationHistory.objects.create(
+    #     course_id=course_key,
+    #     generated_by=request.user,
+    #     instructor_task=instructor_task,
+    #     is_regeneration=False
+    # )
+    cert_filter_args = {
+        "course_id": course_key,
+        "generated_by": request.user,
+        "instructor_task": instructor_task,
+        "is_regeneration": False
+    }
+    certs_api.create_or_update_cert_gen_history(**cert_filter_args)
 
     return instructor_task
 
@@ -551,12 +559,19 @@ def regenerate_certificates(request, course_key, statuses_to_regenerate):
 
     instructor_task = submit_task(request, task_type, task_class, course_key, task_input, task_key)
 
-    CertificateGenerationHistory.objects.create(
-        course_id=course_key,
-        generated_by=request.user,
-        instructor_task=instructor_task,
-        is_regeneration=True
-    )
+    # CertificateGenerationHistory.objects.create(
+    #     course_id=course_key,
+    #     generated_by=request.user,
+    #     instructor_task=instructor_task,
+    #     is_regeneration=True
+    # )
+    cert_filter_args = {
+        "course_id": course_key,
+        "generated_by": request.user,
+        "instructor_task": instructor_task,
+        "is_regeneration": True
+    }
+    certs_api.create_or_update_cert_gen_history(**cert_filter_args)
 
     return instructor_task
 

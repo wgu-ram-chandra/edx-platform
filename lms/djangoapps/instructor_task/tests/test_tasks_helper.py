@@ -31,7 +31,6 @@ from common.djangoapps.course_modes.models import CourseMode
 from common.djangoapps.student.models import CourseEnrollment, CourseEnrollmentAllowed
 from common.djangoapps.student.tests.factories import CourseEnrollmentFactory, UserFactory
 from lms.djangoapps.certificates.data import CertificateStatuses
-from lms.djangoapps.certificates.models import GeneratedCertificate
 from lms.djangoapps.certificates.tests.factories import CertificateAllowlistFactory, GeneratedCertificateFactory
 from lms.djangoapps.courseware.models import StudentModule
 from lms.djangoapps.grades.course_data import CourseData
@@ -2087,7 +2086,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.downloadable,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Allowlist 5 students
@@ -2247,7 +2246,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.downloadable,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Grant error certs to 3 students
@@ -2256,7 +2255,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.error,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Grant a deleted cert to the 6th student
@@ -2265,7 +2264,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.deleted,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Allowlist 7 students
@@ -2307,7 +2306,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.downloadable,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2317,7 +2316,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.error,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2327,7 +2326,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.deleted,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2337,7 +2336,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.generating,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2378,7 +2377,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.downloadable,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2388,7 +2387,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.error,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2398,7 +2397,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.unavailable,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2408,7 +2407,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.generating,
-                mode=GeneratedCertificate.CourseMode.VERIFIED,
+                mode=CourseMode.VERIFIED,
                 grade=default_grade
             )
 
@@ -2453,7 +2452,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.downloadable,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Grant error certs to 3 students
@@ -2462,7 +2461,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.error,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Grant a deleted cert to the 6th student
@@ -2471,7 +2470,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.deleted,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Grant a notpassing cert to the 7th student
@@ -2480,7 +2479,7 @@ class TestCertificateGeneration(InstructorTaskModuleTestCase):
                 user=student,
                 course_id=self.course.id,
                 status=CertificateStatuses.notpassing,
-                mode=GeneratedCertificate.CourseMode.VERIFIED
+                mode=CourseMode.VERIFIED
             )
 
         # Allowlist 7 students

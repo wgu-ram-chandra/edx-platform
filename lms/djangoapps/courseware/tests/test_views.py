@@ -59,11 +59,7 @@ from common.djangoapps.util.tests.test_date_utils import fake_pgettext, fake_uge
 from common.djangoapps.util.url import reload_django_url_config
 from common.djangoapps.util.views import ensure_valid_course_key
 from lms.djangoapps.certificates import api as certs_api
-from lms.djangoapps.certificates.models import (
-    CertificateGenerationConfiguration,
-    CertificateGenerationCourseSetting,
-    CertificateStatuses
-)
+from lms.djangoapps.certificates.data import CertificateStatuses
 from lms.djangoapps.certificates.tests.factories import (
     CertificateAllowlistFactory,
     CertificateInvalidationFactory,
@@ -1369,7 +1365,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         self.assertNotContains(resp, 'Request Certificate')
 
         # Enable the feature, but do not enable it for this course
-        CertificateGenerationConfiguration(enabled=True).save()
+        certs_api.set_cert_generation_config(enabled=True)
 
         resp = self._get_progress_page()
         self.assertNotContains(resp, 'Request Certificate')
@@ -1394,7 +1390,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         )
 
         # Enable the feature, but do not enable it for this course
-        CertificateGenerationConfiguration(enabled=True).save()
+        certs_api.set_cert_generation_config(enabled=True)
 
         # Enable certificate generation for this course
         certs_api.set_cert_generation_enabled(self.course.id, True)
@@ -1425,7 +1421,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         )
 
         # Enable the feature, but do not enable it for this course
-        CertificateGenerationConfiguration(enabled=True).save()
+        certs_api.set_cert_generation_config(enabled=True)
 
         # Enable certificate generation for this course
         certs_api.set_cert_generation_enabled(self.course.id, True)
@@ -1515,7 +1511,7 @@ class ProgressPageTests(ProgressPageBaseTests):
     @ddt.unpack
     def test_show_certificate_request_button(self, course_mode, user_verified):
         """Verify that the Request Certificate is not displayed in audit mode."""
-        CertificateGenerationConfiguration(enabled=True).save()
+        certs_api.set_cert_generation_config(enabled=True)
         certs_api.set_cert_generation_enabled(self.course.id, True)
         CourseEnrollment.enroll(self.user, self.course.id, mode=course_mode)
         with patch(
@@ -1781,10 +1777,8 @@ class ProgressPageTests(ProgressPageBaseTests):
         Verify if the learner is not ID Verified, and the certs are not yet generated,
         but the learner is eligible, the get_cert_data would return cert status Unverified
         """
-        CertificateGenerationConfiguration(enabled=True).save()
-        CertificateGenerationCourseSetting(
-            course_key=self.course.id, self_generation_enabled=True
-        ).save()
+        certs_api.set_cert_generation_config(enabled=True)
+        certs_api.set_cert_generation_enabled(self.course.id, True)
         with patch.dict(settings.FEATURES, ENABLE_CERTIFICATES_IDV_REQUIREMENT=enable_cert_idv_requirement):
             with patch(
                 'lms.djangoapps.certificates.api.certificate_downloadable_status',
@@ -1823,7 +1817,7 @@ class ProgressPageTests(ProgressPageBaseTests):
             status=CertificateStatuses.downloadable,
             mode=mode
         )
-        CertificateGenerationConfiguration(enabled=True).save()
+        certs_api.set_cert_generation_config(enabled=True)
         certs_api.set_cert_generation_enabled(self.course.id, True)
         return generated_certificate
 

@@ -188,8 +188,8 @@ class TestHandleNotifyCredentialsTask(TestCase):
         with freeze_time(datetime(2017, 5, 1, 3)):
             grade2 = PersistentCourseGrade.objects.create(user_id=self.user.id, course_id='course-v1:edX+Test+22',
                                                           percent_grade=1)
-
-        total_certificates = GeneratedCertificate.objects.filter(**cert_filter_args).order_by('modified_date')  # pylint: disable=no-member
+        
+        total_certificates = get_recently_modified_certificates(**cert_filter_args)
         total_grades = PersistentCourseGrade.objects.all()
 
         self.options['auto'] = True
