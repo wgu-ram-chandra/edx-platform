@@ -295,7 +295,7 @@ ENTERPRISE_MARKETING_FOOTER_QUERY_PARAMS = OrderedDict([
 ])
 
 ############################ STATIC FILES #############################
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+settings.STORAGES["default"]["BACKEND"] = 'django.core.files.storage.FileSystemStorage'
 MEDIA_ROOT = TEST_ROOT / "uploads"
 MEDIA_URL = "/uploads/"
 STATICFILES_DIRS.append(("uploads", MEDIA_ROOT))

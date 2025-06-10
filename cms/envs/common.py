@@ -145,6 +145,7 @@ from lms.envs.common import (
 )
 from path import Path as path
 from django.urls import reverse_lazy
+from django.conf import settings
 
 from lms.djangoapps.lms_xblock.mixin import LmsBlockMixin
 from cms.lib.xblock.authoring_mixin import AuthoringMixin
@@ -2553,7 +2554,7 @@ BULK_EMAIL_DEFAULT_FROM_EMAIL = 'no-reply@example.com'
 BULK_EMAIL_LOG_SENT_EMAILS = False
 
 ############### Settings for django file storage ##################
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+settings.STORAGES["default"]["BACKEND"] = 'django.core.files.storage.FileSystemStorage'
 
 ###################### Grade Downloads ######################
 # These keys are used for all of our asynchronous downloadable files, including

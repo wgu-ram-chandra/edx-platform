@@ -29,7 +29,6 @@ from .common import *
 from lms.envs.test import (  # pylint: disable=wrong-import-order, disable=unused-import
     ACCOUNT_MICROFRONTEND_URL,
     COMPREHENSIVE_THEME_DIRS,  # unimport:skip
-    DEFAULT_FILE_STORAGE,
     ECOMMERCE_API_URL,
     ENABLE_COMPREHENSIVE_THEMING,
     JWT_AUTH,

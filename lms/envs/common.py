@@ -45,6 +45,7 @@ import sys
 import os
 
 import django
+from django.conf import settings
 from corsheaders.defaults import default_headers as corsheaders_default_headers
 from path import Path as path
 from django.utils.translation import gettext_lazy as _
@@ -5204,7 +5205,7 @@ VIDEO_UPLOAD_PIPELINE = {
 }
 
 ############### Settings for django file storage ##################
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+settings.STORAGES["default"]["BACKEND"] = 'django.core.files.storage.FileSystemStorage'
 
 ### Proctoring configuration (redirct URLs and keys shared between systems) ####
 PROCTORING_BACKENDS = {
